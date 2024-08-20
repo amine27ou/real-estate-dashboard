@@ -21,7 +21,7 @@ export default function Sidebar() {
               <span className='font-poppins '>Dashboard</span>
             </NavLink>
             <NavLink 
-              to='/property' 
+              to='/properties' 
               className={({ isActive }) =>
                 isActive ? 'bg-[rgb(72,96,233)] text-white flex items-center gap-4 py-3 px-6 transition-all rounded-md' 
                          : 'text-gray-500 hover:text-white flex items-center gap-4 py-3 px-6 transition-all rounded-md hover:bg-[rgb(72,96,233)]'

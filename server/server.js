@@ -7,6 +7,8 @@ app.use(express.json())
 require('dotenv').config()
 const agentRouter = require('./routes/agent.route')
 app.use('/api/v1/',agentRouter)
+const propertiesRouter = require('./routes/property.route')
+app.use('/api/v1/',propertiesRouter)
 const path = require('path')
 app.use("/uploads",express.static(path.join(__dirname,'uploads')))
 

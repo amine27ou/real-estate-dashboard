@@ -5,6 +5,8 @@ import Home from "../pages/Home";
 import AgentLayout from "../layouts/AgentLayout";
 import ToastMessageProvider from "../contexts/ToastContext";
 import AuthContextProvider from "../contexts/AuthContext";
+import Properties from "../pages/Properties";
+import AddProperty from "../pages/AddProperty";
 
 export const route = createBrowserRouter([
   {
@@ -19,7 +21,14 @@ export const route = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },{
+        path: "/properties",
+        element: <Properties />,
       },
+      {
+        path:'/properties/add',
+        element:<AddProperty/>
+      }
     ],
   },
   {

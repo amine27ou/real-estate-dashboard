@@ -103,7 +103,6 @@ export default function AuthContextProvider({ children }: { children: ReactNode 
       const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}user`, { token:localStorage.getItem('personal_token') });
       if (response.status === 200) {
         setCurrentUser(response.data.data.payload.user);
-        // localStorage.setItem('user',response.data.data.payload.user)
       }else{
         localStorage.removeItem('personal_token');
         setCurrentUser(undefined);
