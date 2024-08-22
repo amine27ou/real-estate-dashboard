@@ -16,16 +16,19 @@ export default function AgentLayout() {
   };
 
   return (
-    <div className="bg-[rgb(26,28,30)] fixed inset-0 flex flex-col">
+    <div className="bg-[rgb(26,28,30)] flex flex-col h-screen">
       {toastMessage.message && (
-        <div className='fixed top-20 right-20'>
+        <div className='fixed top-20 mt-3 right-20'>
           <Toast type={toastMessage.type} message={toastMessage.message} />
         </div>
       )}
       <Navbar setMenuOpened={setMenuOpened} menuOpened={menuOpened} />
-      <div className="flex flex-row flex-1">
+      <div className="flex flex-row flex-1 overflow-hidden">
         <Sidebar />
-        <div className="flex-1 overflow-y-auto" onClick={handleClickOutside}>
+        <div
+          className="flex-1 overflow-y-auto"
+          onClick={handleClickOutside}
+        >
           <Outlet />
         </div>
       </div>

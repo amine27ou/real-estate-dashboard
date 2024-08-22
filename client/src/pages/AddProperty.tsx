@@ -4,22 +4,12 @@ import { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { useToastContext } from "../contexts/ToastContext";
+import { Property, StateType } from "../types";
 
 export default function AddProperty() {
     const {setToastMessage} = useToastContext()
     const navigate = useNavigate()
-    type Property = {
-        title: string;
-        description: string;
-        propertyType: string;
-        country: string;
-        state: string;
-        price: number;
-        beds: number;
-        photo: string;
-        surface: number;
-        status: string;
-    }
+    
     
     const [propertyData, setPropertyData] = useState<Property>({
         title: '',
@@ -34,13 +24,7 @@ export default function AddProperty() {
         status: ''
     });
 
-    type StateType = {
-        countryCode: string,
-        isoCode: string,
-        latitude?: string | null,
-        longitude?: string | null,
-        name: string,
-    }
+    
 
     const [countryStates, setCountryStates] = useState<StateType[]>([]);
     const cancel = ()=>{
@@ -67,7 +51,8 @@ export default function AddProperty() {
     }, [propertyData.country]);
 
     const handleChange =  (e: any) => {
-        setPropertyData({ ...propertyData, [e.target.name]: e.target.value });
+        const {type,name,value,files} = e.target
+        setPropertyData({ ...propertyData, [name]: type === "file" ? files[0] : value });
     }
 
     const handleSubmit = async(e: any) => {
@@ -75,16 +60,16 @@ export default function AddProperty() {
         try{
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}properties`,propertyData,{
                 headers:{
-                    "Authorization":`Bearer ${localStorage.getItem('personal_token')}`
+                    "Authorization":`Bearer ${localStorage.getItem('personal_token')}`,
+                    "Content-Type":"multipart/form-data"
                 }
             })
             if(response.status === 201){
                  navigate('/properties')
                  setToastMessage({ type: response.data.status, message: response.data.message });
-                 console.log(response)
             }
         }catch(err:any){
-            console.log(err)
+            setToastMessage({ type: "ERROR", message: "An error has occured" });
         }
     }
 
@@ -203,8 +188,6 @@ export default function AddProperty() {
                             type="file"
                             id="photo"
                             name="photo"
-                            placeholder="Photo"
-                            value={propertyData.photo}
                             onChange={handleChange}
                             className="bg-[rgb(17,18,20)] p-2 rounded-md outline-none text-gray-300 w-full"
                         />
