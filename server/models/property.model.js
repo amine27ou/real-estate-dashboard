@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const propertySchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    propertyType: { type: String, required: true },
+    propertyType: { type: String, required: true,enum:["Apartment","House","Commercial","Lot","Garage"] },
     country: { type: String, required: true },
     state: { type: String, required: false },
     price: { type: Number, required: true },

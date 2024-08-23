@@ -2,13 +2,16 @@ import axios from "axios";
 import { Country, State } from "country-state-city";
 import { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useToastContext } from "../contexts/ToastContext";
 import { Property, StateType } from "../types";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export default function AddProperty() {
+export default function EditProperty() {
     const {setToastMessage} = useToastContext()
     const navigate = useNavigate()
+    const [loading,setLoading] = useState<boolean>(true)
+    const {id} = useParams()
     
     
     const [propertyData, setPropertyData] = useState<Property>({
@@ -43,6 +46,28 @@ export default function AddProperty() {
             status: ''
         })
     }
+
+    const fetchProperty = async (propertyId: any) => {
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_BASE_URL}properties/${propertyId}`, {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem('personal_token')}`
+            }
+          });
+          if (response.status === 200) {
+            setLoading(false);
+            setPropertyData(response.data.property);
+          }
+        } catch (err) {
+          setLoading(false);
+          console.error(err);
+        }
+      };
+    
+      useEffect(() => {
+        fetchProperty(id);
+      }, [id]);
+
     useEffect(() => {
         if (propertyData.country) {
             const states = State.getStatesOfCountry(propertyData.country);
@@ -60,13 +85,14 @@ export default function AddProperty() {
     const handleSubmit = async(e: any) => {
         e.preventDefault();
         try{
-            const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}properties`,propertyData,{
+            const response = await axios.put(`${import.meta.env.VITE_SERVER_BASE_URL}properties/${id}`,propertyData,{
                 headers:{
                     "Authorization":`Bearer ${localStorage.getItem('personal_token')}`,
                     "Content-Type":"multipart/form-data"
                 }
             })
-            if(response.status === 201){
+            console.log(response)
+            if(response.status === 200){
                  navigate('/properties')
                  setToastMessage({ type: response.data.status, message: response.data.message });
             }
@@ -74,6 +100,7 @@ export default function AddProperty() {
             setToastMessage({ type: "ERROR", message: "An error has occured" });
         }
     }
+    console.log(propertyData)
 
     return (
         <div className="bg-[rgb(17,18,20)] p-10">
@@ -85,7 +112,12 @@ export default function AddProperty() {
                 <h1 className="text-2xl text-white mt-10">Create Property</h1>
             </div>
             <div className="bg-[rgb(41,43,45)] p-3 mt-10 rounded-md">
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {loading ? 
+                    <div className="flex items-center justify-center">
+                        <AiOutlineLoading3Quarters className="text-white animate-spin text-3xl" />
+                    </div>
+                : (
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="mb-4">
                         <label htmlFor="title" className="block text-gray-400">Property Title</label>
                         <input 
@@ -106,7 +138,7 @@ export default function AddProperty() {
                             placeholder="Description"
                             value={propertyData.description}
                             onChange={handleChange}
-                            className="bg-[rgb(17,18,20)] p-2 rounded-md outline-none text-gray-300 w-full h-[86px]"
+                            className="bg-[rgb(17,18,20)] p-2 rounded-md outline-none text-gray-300 w-full h-[86px] resize-none"
                         />
                     </div>
                     <div className="mb-4">
@@ -225,7 +257,7 @@ export default function AddProperty() {
                             type="submit"
                             className="bg-[rgb(72,96,233)] p-2 rounded-md text-white w-max"
                         >
-                            Add Property
+                            Update Property
                         </button>
                         <button 
                             onClick={cancel}
@@ -235,6 +267,7 @@ export default function AddProperty() {
                         </button>
                     </div>
                 </form>
+                )}
             </div>
         </div>
     )

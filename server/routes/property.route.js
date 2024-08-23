@@ -28,5 +28,7 @@ const upload = multer({storage:diskStorage,fileFilter})
 Router.route('/properties')
     .get(verifyToken,propertiesController.getAllProperties)
     .post(upload.single('photo'),verifyToken,propertiesController.addProperty)
-
+Router.route('/properties/:id')
+    .get(verifyToken,propertiesController.getProperty)
+    .put(upload.single('photo'),verifyToken,propertiesController.updateProperty)
 module.exports = Router

@@ -16,7 +16,7 @@ export default function AgentLayout() {
   };
 
   return (
-    <div className="bg-[rgb(26,28,30)] flex flex-col h-screen">
+    <div className="bg-[rgb(16,17,18)] flex flex-col h-screen">
       {toastMessage.message && (
         <div className='fixed top-20 mt-3 right-20'>
           <Toast type={toastMessage.type} message={toastMessage.message} />

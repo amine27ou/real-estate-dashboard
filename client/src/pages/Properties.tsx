@@ -160,17 +160,24 @@ export default function Properties() {
                 {loading ? <AiOutlineLoading3Quarters className="text-white animate-spin text-6xl" /> : (
                   <div className="grid grid-cols-2">
                     {properties.map((property:Property)=>(
-                      <div className="flex flew-row items-center gap-2 m-10">
+                      <div className="flex flew-row items-center gap-2 m-10 bg-[rgb(18,19,21)] p-2 rounded-md">
                         <div>
                           <img src={`${import.meta.env.VITE_FILES_URL}${property.photo}`} className='rounded-md h-[150px] object-contain' />
                         </div>
                         <div className="text-white">
-                            <span className="bg-[rgb(17,18,20)]  p-2 rounded-md mb-2 text-blue-500 font-semibold">{property.price}</span>
+                            <span className="bg-[rgb(17,18,20)]  p-2 rounded-md mb-2 text-blue-500 font-semibold">${property.price}</span>
                             <h1 className="text-xl font-semibold">{property.title}</h1>
                             <h1 className="flex items-center gap-1 text-gray-500"><FaLocationDot/> {property.state},{property.country}</h1>
                             <div className="flex justify-between items-center text-white">
                               <span className="flex items-center font-semibold gap-1"><IoBedOutline className="text-xl" /> {property.beds}</span>
                               <span className="flex items-center font-semibold gap-1"><BiArea className="text-xl" /> {property.surface}M</span>
+                            </div>
+                            <div className="flex gap-2">
+                            <Link to={`/properties/${property._id}`} className="text-white bg-green-600 px-2 py-1 rounded-sm" >
+                              View 
+                            </Link><Link to={`/properties/${property._id}/edit`} className="text-white bg-blue-600 px-2 py-1 rounded-sm" >
+                              Edit 
+                            </Link>
                             </div>
                         </div>
                       </div>

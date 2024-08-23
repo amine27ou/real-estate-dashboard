@@ -7,6 +7,9 @@ import ToastMessageProvider from "../contexts/ToastContext";
 import AuthContextProvider from "../contexts/AuthContext";
 import Properties from "../pages/Properties";
 import AddProperty from "../pages/AddProperty";
+import DetailedProperty from "../pages/DetailedProperty";
+import Agents from "../pages/Agents";
+import EditProperty from "../pages/EditProperty";
 
 export const route = createBrowserRouter([
   {
@@ -28,7 +31,18 @@ export const route = createBrowserRouter([
       {
         path:'/properties/add',
         element:<AddProperty/>
-      }
+      },
+      {
+        path:'/properties/:id',
+        element:<DetailedProperty/>
+      },{
+        path:'/properties/:id/edit',
+        element:<EditProperty/>
+      },
+      {
+        path:'/agents',
+        element:<Agents/>
+      },
     ],
   },
   {
