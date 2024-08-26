@@ -10,6 +10,7 @@ import AddProperty from "../pages/AddProperty";
 import DetailedProperty from "../pages/DetailedProperty";
 import Agents from "../pages/Agents";
 import EditProperty from "../pages/EditProperty";
+import AgentDetails from "../pages/AgentDetails";
 
 export const route = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const route = createBrowserRouter([
         path:'/agents',
         element:<Agents/>
       },
+      {
+        path:'/agents/:id',
+        element:<AgentDetails/>
+      }
     ],
   },
   {

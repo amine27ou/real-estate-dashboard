@@ -2,7 +2,8 @@ const express = require('express');
 const Router = express.Router();
 const agentController = require('../controllers/agents.controller');
 const multer  = require('multer')
-const path = require('path')
+const verifyToken = require('../middlewares/verifyToken')
+
 const diskStorage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,'uploads')
@@ -30,5 +31,9 @@ Router.route('/login')
     .post(agentController.login);
 Router.route('/user')
     .post(agentController.getUser);
+Router.route('/agents')
+    .get(verifyToken,agentController.getAllAgents);
+Router.route('/agents/:id')
+    .get(verifyToken,agentController.getAgent)
 
 module.exports = Router;

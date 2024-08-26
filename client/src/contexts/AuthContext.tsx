@@ -49,6 +49,8 @@ export default function AuthContextProvider({ children }: { children: ReactNode 
     checkUser();
   }, []);  
 
+  
+
   const register = async (agent: Agent) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}register`, agent, {

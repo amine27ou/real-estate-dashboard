@@ -1,4 +1,5 @@
 const Agent = require('../models/agent.model');
+const Property = require('../models/property.model');
 const bcrypt = require('bcrypt');
 const httpStatus = require('../utils/httpStatus');
 const generateJWT = require('../utils/generateJWT');
@@ -96,10 +97,73 @@ const getUser = async (req, res) => {
 };
 
 
+const getAllAgents = async (req, res) => {
+    const { page = 1, limit = 10 } = req.query;
+    const parsedPage = parseInt(page, 10);
+    const parsedLimit = parseInt(limit, 10);
+    const skip = (parsedPage - 1) * parsedLimit;
+
+    try {
+        const totalDoc = await Agent.countDocuments(); 
+        const agents = await Agent.find().limit(parsedLimit).skip(skip);
+
+        return res.json({
+            status: httpStatus.SUCCESS,
+            message: 'Agents fetched successfully!',
+            agents: agents,
+            totalAgents: totalDoc,
+            totalPages: Math.ceil(totalDoc / parsedLimit),
+            page: parsedPage,
+        });
+    } catch (err) {
+        return res.status(400).json({
+            status: httpStatus.ERROR,
+            message: err.message,
+        });
+    }
+};
+
+const getAgent = async (req, res) => {
+    const agentId = req.params.id;
+    try {
+        if (agentId) {
+            const agent = await Agent.findById(agentId);
+            if (!agent) {
+                return res.status(404).json({
+                    status: httpStatus.FAIL,
+                    message: 'Agent Not Found!'
+                });
+            }
+
+            const activeListings = await Property.find({ creator: agent._id });
+
+            return res.json({
+                status: httpStatus.SUCCESS,
+                message: 'Agent fetched successfully!',
+                agent: agent,
+                activeListings: activeListings
+            });
+        } else {
+            return res.status(404).json({
+                status: httpStatus.FAIL,
+                message: 'Agent Not Found!'
+            });
+        }
+    } catch (err) {
+        return res.status(400).json({
+            status: httpStatus.FAIL,
+            message: err.message
+        });
+    }
+};
+
+
 
 module.exports = {
     register,
     login,
-    getUser
+    getUser,
+    getAllAgents,
+    getAgent
 };
 

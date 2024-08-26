@@ -19,9 +19,25 @@ export type SearchFilterType = {
     status:string;
   };
  export type StateType  = {
-    countryCode:string,
-    isoCode:string,
-    latitude?:string | null,
-    longitude?:string | null,
-    name:string,
+    countryCode:string;
+    isoCode:string;
+    latitude?:string | null;
+    longitude?:string | null;
+    name:string;
+}
+
+export type AgentType = {
+  _id:string;
+  firstname: string;
+    lastname: string;
+    birthdate: string;
+    phone: string;
+    gender: string;
+    country: string;
+    state: string;
+    zipcode:number;
+    email: string;
+    password: string;
+    avatar:string;
+    role:string;
 }

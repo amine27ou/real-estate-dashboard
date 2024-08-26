@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Country, State } from "country-state-city";
 import { useAuthContext } from "../contexts/AuthContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AgentType } from "../types";
 
 export default function Register() {
-  const {register} = useAuthContext()
+  const {register,currentUser} = useAuthContext()
   const [loading,setLoading] = useState(false)
-  const [agentInfo, setAgentInfo] = useState({
+  const navigate = useNavigate()
+  const [agentInfo, setAgentInfo] = useState<AgentType>({
     firstname: "",
     lastname: "",
     birthdate: "",
@@ -18,6 +20,8 @@ export default function Register() {
     zipcode:0,
     email: "",
     password: "",
+    avatar:"",
+    role:"",
   });
 
   type State  = {
@@ -39,9 +43,16 @@ export default function Register() {
     }
   }, [agentInfo.country]);
 
-  // Handle form field changes
+
+  useEffect(()=>{
+    if(currentUser){
+      navigate('/properties')
+    }
+  },[currentUser])
+  
   const handleChange = (e:any) => {
-    setAgentInfo({ ...agentInfo, [e.target.name]: e.target.value });
+    const {name,type,value,files} = e.target
+    setAgentInfo({ ...agentInfo, [name]: type === 'file' ? files[0] : value });
   };
   
   const handleSubmit = (e:any)=>{
@@ -75,6 +86,7 @@ export default function Register() {
               onChange={handleChange}
               placeholder="John"
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -86,6 +98,7 @@ export default function Register() {
               onChange={handleChange}
               placeholder="Doe"
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -97,6 +110,7 @@ export default function Register() {
               onChange={handleChange}
               max={new Date().toISOString().split("T")[0]} // Set max to today's date
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -108,6 +122,7 @@ export default function Register() {
               onChange={handleChange}
               placeholder="+012 345 5678"
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -117,6 +132,7 @@ export default function Register() {
               value={agentInfo.gender}
               onChange={handleChange}
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none bg-white"
+              required
             >
               <option value="" disabled>Select Gender</option>
               <option value="Male">Male</option>
@@ -130,6 +146,7 @@ export default function Register() {
               value={agentInfo.country}
               onChange={handleChange}
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none bg-white"
+              required
             >
               <option value="" disabled>Select a country</option>
               {Country.getAllCountries().map((country) => (
@@ -146,6 +163,7 @@ export default function Register() {
               value={agentInfo.state}
               onChange={handleChange}
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none bg-white"
+              required
             >
               <option value="" disabled>Select a state</option>
               {countryStates.map((state:State) => (
@@ -164,6 +182,7 @@ export default function Register() {
               onChange={handleChange}
               placeholder="123456"
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div><div className="flex flex-col">
             <label>Email</label>
@@ -174,6 +193,7 @@ export default function Register() {
               onChange={handleChange}
               placeholder="example@email.co"
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -185,6 +205,18 @@ export default function Register() {
               onChange={handleChange}
               placeholder="**********"
               className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>Avatar</label>
+            <input
+              type="file"
+              name="avatar"
+              accept="image/*"
+              onChange={handleChange}
+              className="border-gray-400 border p-2 my-3 w-full rounded-md outline-none"
+              required
             />
           </div>
           <button type="submit" className="bg-[#465AE8] text-white p-2 rounded-md my-3">

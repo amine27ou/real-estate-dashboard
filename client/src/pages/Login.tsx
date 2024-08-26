@@ -1,16 +1,16 @@
-import  { useState } from 'react';
-import { Link } from 'react-router-dom';
+import  { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function Login() {
-  const {login,errors} = useAuthContext()
+  const {login,errors,currentUser} = useAuthContext()
   const [loading,setLoading] = useState(false)
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
   const handleChange = (e:any)=>{
     setLoginInfo({...loginInfo,[e.target.name]:e.target.value})
   }
-
+  const navigate = useNavigate()
   const handleSubmit = async(e:any)=>{
     e.preventDefault()
     setLoading(true)
@@ -22,6 +22,15 @@ export default function Login() {
       setLoading(false)
     }
   }
+
+    useEffect(()=>{
+      if(currentUser){
+        navigate('/')
+      }
+    },[currentUser])
+
+
+
   return (
     <div className="flex h-screen">
       <div className="lg:w-1/2 md:w-full flex justify-center items-center flex-col">

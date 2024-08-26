@@ -32,7 +32,7 @@ export default function Navbar({ setMenuOpened, menuOpened }: NavbarProps) {
         <h1 className='font-poppins text-white text-2xl font-semibold'>Yarigo</h1>
       </div>
       <div onClick={() => setMenuOpened(!menuOpened)} className='flex items-center justify-center gap-2 bg-[rgb(41,43,45)] p-1 cursor-pointer rounded-md'>
-        <img src={`http://127.0.0.1:8080/${currentUser?.avatar}`} alt='profile' className='w-10 object-contain' />
+        <img src={`${import.meta.env.VITE_FILES_URL}${currentUser?.avatar}`} alt='profile' className='h-[50px] object-cover rounded-full w-[50px]' />
         <div>
           <p className='text-white text-sm'>{currentUser?.firstname} {currentUser?.lastname}</p>
           <p className='text-gray-400 text-sm'>{currentUser?.role}</p>
