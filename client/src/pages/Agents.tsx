@@ -92,13 +92,13 @@ export default function Agents() {
             {agents.map((agent) => (
               <div
                 key={agent._id}
-                className="relative flex flex-row items-center gap-3 bg-[rgb(26,28,30)] p-4 rounded-md"
+                className="relative flex flex-row items-center gap-10 bg-[rgb(26,28,30)] p-4 rounded-md"
               >
                 <div>
                   <img
                     src={`${import.meta.env.VITE_FILES_URL}${agent.avatar}`}
                     alt={`${agent.firstname} ${agent.lastname}`}
-                    className="w-[300px] rounded-md"
+                    className="w-[200px] h-[200px] object-contain rounded-md"
                   />
                 </div>
                 <div>
@@ -132,13 +132,19 @@ export default function Agents() {
                     ref={menuRef}
                     className="absolute top-10 text-white right-10 bg-[rgb(20,22,24)] rounded-md shadow-md"
                   >
-                    <Link to={`/agents/${agent._id}`} className="block  hover:bg-gray-500 py-2 px-4 rounded-md">
+                    <Link
+                      to={`/agents/${agent._id}`}
+                      className="block hover:bg-gray-500 py-2 px-4 rounded-md"
+                    >
                       View Agent
                     </Link>
-                    <Link to={`/agents/edit/${agent._id}`} className="block  hover:bg-gray-500 py-2 px-4 rounded-md">
+                    <Link
+                      to={`/agents/edit/${agent._id}`}
+                      className="block hover:bg-gray-500 py-2 px-4 rounded-md"
+                    >
                       Edit Agent
                     </Link>
-                    <button className="block w-full text-left   hover:bg-gray-500 py-2 px-4 rounded-md">
+                    <button className="block w-full text-left hover:bg-gray-500 py-2 px-4 rounded-md">
                       Delete Agent
                     </button>
                   </div>

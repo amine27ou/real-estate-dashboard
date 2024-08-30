@@ -35,5 +35,6 @@ Router.route('/agents')
     .get(verifyToken,agentController.getAllAgents);
 Router.route('/agents/:id')
     .get(verifyToken,agentController.getAgent)
+    .put(upload.single('avatar'),verifyToken,agentController.updateAgent)
 
 module.exports = Router;

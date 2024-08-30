@@ -34,14 +34,11 @@ const register = async (req, res) => {
             avatar: req.file ? req.file.filename : 'uploads/profile.png',
         });
 
-        // Generate the JWT token
         const token = await generateJWT(newUser);
         newUser.token = token;
 
-        // Save the user to the database
         await newUser.save();
 
-        // Send the success response
         return res.status(201).json({
             status: httpStatus.SUCCESS,
             message: 'Registered Successfully!',
@@ -157,13 +154,43 @@ const getAgent = async (req, res) => {
     }
 };
 
+const updateAgent = async(req,res)=>{
+    try{
+    const {_id, firstname, lastname, email, password, birthdate, country, state, zipcode, phone, gender } = req.body;
 
+    let avatar = req.body.avatar; 
+
+    if (req.file) {
+        avatar = req.file.filename;
+    }
+        const updatedAgent = await Agent.updateOne({_id:_id},{$set:{ firstname, lastname, email, password, birthdate, country, state, zipcode, phone, gender,avatar:avatar,
+    }},{ new: true })
+        if (!updatedAgent) {
+            return res.status(404).json({ status: httpStatus.FAIL, message: 'Agent not found' });
+          }
+        return res.json({status:httpStatus.SUCCESS,message:'Informations Updated Successfully!'})
+    }catch(err){
+        return res.status(400).json({status:httpStatus.FAIL,message:err.message})
+    }
+}
+
+const deleteAgent = async(req,res)=>{
+    const agentId = req.params.id
+    try{
+      await Agent.deleteOne({_id:agentId})
+      return res.json({status:httpStatus.SUCCESS,message:'Agent Deleted Successfully!'})
+    }catch(err){
+      return res.status(400).json({status:httpStatus.FAIL,message:err.message})
+    }
+  }
 
 module.exports = {
     register,
     login,
     getUser,
     getAllAgents,
-    getAgent
+    getAgent,
+    deleteAgent,
+    updateAgent
 };
 

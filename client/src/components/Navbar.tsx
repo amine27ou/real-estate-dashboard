@@ -39,7 +39,7 @@ export default function Navbar({ setMenuOpened, menuOpened }: NavbarProps) {
         </div>
       </div>
       {menuOpened && (
-        <div className='bg-[rgb(41,43,45)] absolute top-[100px] right-10 flex flex-col rounded-md w-52'>
+        <div className='bg-[rgb(41,43,45)] absolute top-[100px] right-10 flex flex-col rounded-md w-52 z-10'>
           <button className='m-2 hover:text-[rgb(72,96,233)] p-2 text-gray-400 flex items-center gap-2'>
             <FaUserCircle className='text-xl' /><span>My Profile</span>
           </button>

@@ -40,16 +40,6 @@ export default function Sidebar() {
               <IoPeopleOutline className='text-xl' />
               <span className='font-poppins '>Agent</span>
             </NavLink>
-            <NavLink 
-              to='/reviews' 
-              className={({ isActive }) =>
-                isActive ? 'bg-[rgb(72,96,233)] text-white flex items-center gap-4 py-3 px-6 transition-all rounded-md' 
-                         : 'text-gray-500 hover:text-white flex items-center gap-4 py-3 px-6 transition-all rounded-md hover:bg-[rgb(72,96,233)]'
-              }
-            >
-              <FaRegStar className='text-xl' />
-              <span className='font-poppins '>Review</span>
-            </NavLink>
             
             <NavLink 
               to='/profile' 

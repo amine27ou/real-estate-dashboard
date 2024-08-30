@@ -10,6 +10,7 @@ export default function Register() {
   const [loading,setLoading] = useState(false)
   const navigate = useNavigate()
   const [agentInfo, setAgentInfo] = useState<AgentType>({
+    _id:'',
     firstname: "",
     lastname: "",
     birthdate: "",

@@ -70,15 +70,15 @@ export default function AgentDetails() {
             </div>
             {/* active listing */}
 
-            <div className="bg-[rgb(26,28,30)] p-3 space-y-10">
-            {activeListings && activeListings.map((property:Property)=>(
-                      <Link to={`/properties/${property._id}`} className="flex flew-row items-center gap-4  bg-[rgb(18,19,21)] p-2 rounded-md">
+            <div className="bg-[rgb(26,28,30)] p-3 space-y-10    h-max w-max rounded-md">
+            {activeListings && activeListings.length > 0 ? activeListings.map((property:Property)=>(
+                      <div  className=" p-3 bg-[rgb(18,19,21)] rounded-md ">
                         <div>
                           <img src={`${import.meta.env.VITE_FILES_URL}${property.photo}`} className='rounded-md h-[150px] object-contain' />
                         </div>
-                        <div className="text-white">
+                        <div className="text-white flex flex-col">
                             <span className="bg-[rgb(17,18,20)]  p-2 rounded-md mb-2 text-blue-500 font-semibold">${property.price}</span>
-                            <h1 className="text-xl font-semibold">{property.title}</h1>
+                            <Link to={`/properties/${property._id}`} className="text-xl font-semibold">{property.title}</Link>
                             <h1 className="flex items-center gap-1 text-gray-500"><FaLocationDot/> {property.state},{property.country}</h1>
                             <div className="flex justify-between items-center text-white">
                               <span className="flex items-center font-semibold gap-1"><IoBedOutline className="text-xl" /> {property.beds}</span>
@@ -88,8 +88,9 @@ export default function AgentDetails() {
                             
                             </div>
                         </div>
-                      </Link>
-                    ))}
+                      </div>
+                      
+                    )) : <h1 className="text-white text-2xl p-2">There is no listing</h1>}
             </div>
         </div>
     </div>

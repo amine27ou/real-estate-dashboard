@@ -178,6 +178,7 @@ export default function AddProperty() {
                             type="number"
                             id="beds"
                             name="beds"
+                            min={0}
                             placeholder="Number of Beds"
                             value={propertyData.beds}
                             onChange={handleChange}
@@ -200,6 +201,7 @@ export default function AddProperty() {
                             type="number"
                             id="surface"
                             name="surface"
+                            min={0}
                             placeholder="Surface Area"
                             value={propertyData.surface}
                             onChange={handleChange}

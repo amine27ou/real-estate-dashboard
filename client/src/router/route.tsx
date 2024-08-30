@@ -11,6 +11,8 @@ import DetailedProperty from "../pages/DetailedProperty";
 import Agents from "../pages/Agents";
 import EditProperty from "../pages/EditProperty";
 import AgentDetails from "../pages/AgentDetails";
+import Profile from "../pages/Profile";
+import EditProfile from "../pages/EditProfile";
 
 export const route = createBrowserRouter([
   {
@@ -47,6 +49,13 @@ export const route = createBrowserRouter([
       {
         path:'/agents/:id',
         element:<AgentDetails/>
+      },{
+        path:'/profile',
+        element:<Profile/>
+      
+      },{
+        path:'/profile/edit',
+        element:<EditProfile/>
       }
     ],
   },

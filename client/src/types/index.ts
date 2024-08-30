@@ -12,7 +12,6 @@ export type Property = {
         status: string;
 }
 export type SearchFilterType = {
-    title: string;
     country: string;
     state: string;
     propertyType:string;

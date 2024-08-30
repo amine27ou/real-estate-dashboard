@@ -31,4 +31,7 @@ Router.route('/properties')
 Router.route('/properties/:id')
     .get(verifyToken,propertiesController.getProperty)
     .put(upload.single('photo'),verifyToken,propertiesController.updateProperty)
+    .delete(verifyToken,propertiesController.deleteProperty)
+Router.route('/dashboard-data')
+    .get(verifyToken,propertiesController.generalData)
 module.exports = Router

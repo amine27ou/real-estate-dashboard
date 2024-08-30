@@ -2,24 +2,12 @@ import axios from 'axios';
 import { useContext, createContext, useState, ReactNode, useEffect } from 'react';
 import { useToastContext } from './ToastContext';
 import { useNavigate } from 'react-router-dom';
+import { AgentType } from '../types';
 
-interface Agent {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  country: string;
-  state: string;
-  phone: string;
-  zipcode: number;
-  gender: string;
-  avatar:string;
-  role:string;
-}
 
 interface AuthContextType {
-  currentUser: Agent | undefined;
-  register: (agent: Agent) => Promise<void>;
+  currentUser: AgentType | undefined;
+  register: (agent: AgentType) => Promise<void>;
   login: (loginInfo: { email: string; password: string }) => Promise<void>;
   logout: () => void;
   errors: string | undefined;
@@ -30,7 +18,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export default function AuthContextProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<Agent | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<AgentType | undefined>(undefined);
   const { setToastMessage } = useToastContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [errors, setErrors] = useState<string | undefined>('');
@@ -51,7 +39,7 @@ export default function AuthContextProvider({ children }: { children: ReactNode 
 
   
 
-  const register = async (agent: Agent) => {
+  const register = async (agent: AgentType) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}register`, agent, {
         headers: {
